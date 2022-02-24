@@ -1,4 +1,4 @@
-package com.proj.game;
+package com.proj.game.graphics;
 
 public class Screen {
 	
@@ -8,5 +8,6 @@ public class Screen {
 	public Screen(int width, int height) {
 		this.width = width;
 		this.height = height;
+		pixels = new int[width * height];
 	}
 }

@@ -10,6 +10,8 @@ import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
 
+import com.proj.game.graphics.Screen;
+
 public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
 
@@ -20,6 +22,8 @@ public class Game extends Canvas implements Runnable {
 	private Thread thread;
 	private JFrame frame;
 	private boolean running = false;
+	
+	private Screen screen;
 	
 	/*Basically converting the image object into an array of integer
 	 * then the array of the integer will signal which pixel receive
@@ -36,6 +40,7 @@ public class Game extends Canvas implements Runnable {
 		setPreferredSize(size);
 
 		frame = new JFrame();
+		screen = new Screen(width, height);
 	}
 
 	public synchronized void start() {
