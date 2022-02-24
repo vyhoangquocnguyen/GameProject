@@ -78,14 +78,20 @@ public class Game extends Canvas implements Runnable {
 			createBufferStrategy(3);
 			return;
 		}
-
+		screen.render();
+		
+		for(int i =0 ; i< pixels.length; i++) {
+			pixels[i] = screen.pixels[i];
+		}
+		
 		// getting a link between graphic with buffer
 		Graphics g = bs.getDrawGraphics();
-		// set color
-		g.setColor(Color.BLACK); // g.setColor(new Color(R,G,B))
-		// fill the rectangle
-		g.fillRect(0, 0, getWidth(), getHeight());
-
+		/*		// set color
+				g.setColor(Color.BLACK); // g.setColor(new Color(R,G,B))
+				// fill the rectangle
+				g.fillRect(0, 0, getWidth(), getHeight());*/
+		//Draw the buffer to the screen
+		g.drawImage(image,0, 0, getWidth(), getHeight(),null);
 		// release all the system resources after render a frame.
 		g.dispose();
 		// swapping the buffers
