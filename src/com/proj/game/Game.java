@@ -18,6 +18,7 @@ public class Game extends Canvas implements Runnable {
 	public static int width = 300;
 	public static int height = width / 16 * 9;
 	public static int scale = 3;
+	public static String title = "GameP";
 
 	private Thread thread;
 	private JFrame frame;
@@ -71,6 +72,7 @@ public class Game extends Canvas implements Runnable {
 		while (running) {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
+			lastTime = now;
 			while (delta >= 1) {
 				update();// handle all the logic
 				updates++;
@@ -81,6 +83,7 @@ public class Game extends Canvas implements Runnable {
 			
 			if(System.currentTimeMillis() - timer > 1000) {
 				timer+=1000;
+				frame.setTitle(title + "  |  " + updates + " ups " + frames + " fps");
 				updates = 0;
 				frames = 0;
 			}
@@ -127,7 +130,7 @@ public class Game extends Canvas implements Runnable {
 	public static void main(String[] args) {
 		Game game = new Game();
 		game.frame.setResizable(false); // important
-		game.frame.setTitle("GameN");
+		game.frame.setTitle(Game.title);
 		// addable because Game is inheritated from Canvas
 		game.frame.add(game);
 		// set the frame to the same size of the component
