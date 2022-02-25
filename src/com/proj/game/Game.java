@@ -22,19 +22,20 @@ public class Game extends Canvas implements Runnable {
 	private Thread thread;
 	private JFrame frame;
 	private boolean running = false;
-	
+
 	private Screen screen;
-	
+
 	/*Basically converting the image object into an array of integer
 	 * then the array of the integer will signal which pixel receive
 	 * which color  */
-	
-	//Create an image
+
+	// Create an image
 	private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-	//Allow to draw things on that image
-	private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
+	// Allow to draw things on that image
+	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+
 	/****/
-	
+
 	public Game() {
 		Dimension size = new Dimension(width * scale, height * scale);
 		setPreferredSize(size);
@@ -60,11 +61,31 @@ public class Game extends Canvas implements Runnable {
 
 	// Runnable will start run() automatically
 	public void run() {
-
+		/*Timer*/
+		long lastTime = System.nanoTime();
+		long timer = System.currentTimeMillis();
+		final double ns = 1e9 / 60.0;
+		double delta = 0;
+		int frames = 0;
+		int updates = 0;
 		while (running) {
-			update();// handle all the logic
+			long now = System.nanoTime();
+			delta += (now - lastTime) / ns;
+			while (delta >= 1) {
+				update();// handle all the logic
+				updates++;
+				delta--;
+			}
 			render();// display the images of the game
+			frames++;
+			
+			if(System.currentTimeMillis() - timer > 1000) {
+				timer+=1000;
+				updates = 0;
+				frames = 0;
+			}
 		}
+		stop();
 	}
 
 	public void update() {
@@ -74,27 +95,27 @@ public class Game extends Canvas implements Runnable {
 	public void render() {
 		BufferStrategy bs = getBufferStrategy();
 		if (bs == null) {
-			//create triple buffers
+			// create triple buffers
 			createBufferStrategy(3);
 			return;
 		}
-		//clear screen
+		// clear screen
 		screen.clear();
-		//then render
+		// then render
 		screen.render();
-		
-		for(int i =0 ; i< pixels.length; i++) {
+
+		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = screen.pixels[i];
 		}
-		
+
 		// getting a link between graphic with buffer
 		Graphics g = bs.getDrawGraphics();
 		/*		// set color
 				g.setColor(Color.BLACK); // g.setColor(new Color(R,G,B))
 				// fill the rectangle
 				g.fillRect(0, 0, getWidth(), getHeight());*/
-		//Draw the buffer to the screen
-		g.drawImage(image,0, 0, getWidth(), getHeight(),null);
+		// Draw the buffer to the screen
+		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 		// release all the system resources after render a frame.
 		g.dispose();
 		// swapping the buffers
