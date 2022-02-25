@@ -110,6 +110,8 @@ public class Game extends Canvas implements Runnable {
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = screen.pixels[i];
 		}
+		
+		//System.out.println(pixels.length); // Check the lenghth of pixels
 
 		// getting a link between graphic with buffer
 		Graphics g = bs.getDrawGraphics();
