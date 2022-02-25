@@ -78,6 +78,9 @@ public class Game extends Canvas implements Runnable {
 			createBufferStrategy(3);
 			return;
 		}
+		//clear screen
+		screen.clear();
+		//then render
 		screen.render();
 		
 		for(int i =0 ; i< pixels.length; i++) {
