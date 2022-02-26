@@ -1,7 +1,8 @@
 package com.proj.game.input;
 
-import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.KeyEvent;
+
 
 public class Keyboard implements KeyListener{
 	
@@ -14,22 +15,23 @@ public class Keyboard implements KeyListener{
 		right = keys[KeyEvent.VK_RIGHT] || keys[KeyEvent.VK_D];
 		left = keys[KeyEvent.VK_LEFT] || keys[KeyEvent.VK_A];
 		
+
 	}
 	
 	public void keyTyped(KeyEvent e) {
-		keys[e.getKeyCode()] = true;
+		
 		
 	}
 
 	
 	public void keyPressed(KeyEvent e) {
-		keys[e.getKeyCode()] = false;
+		keys[e.getKeyCode()] = true;
 		
 	}
 
 	
 	public void keyReleased(KeyEvent e) {
-
+		keys[e.getKeyCode()] = false;
 		
 	}
 	
