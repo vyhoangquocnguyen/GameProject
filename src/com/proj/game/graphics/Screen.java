@@ -31,18 +31,20 @@ public class Screen {
 
 	public void render(int xOffset, int yOffset) {
 		for (int y = 0; y < height; y++) {
-			int yy = y + yOffset; // these yy and xx is for shifting per *pixel*
+			int yp = y + yOffset; // these yy and xx is for shifting per *pixel*
 			// if (yy < 0 || yy >= height) break; //out of bound
+			if ( yp <0 || yp >= height) continue;
 			for (int x = 0; x < width; x++) {
-				int xx = x + xOffset; // xx = x + xOffset Shift left
+				int xp = x + xOffset; // xx = x + xOffset Shift left
+				if ( xp < 0 || xp >= width) continue;
 				// if (xx < 0 || xx >= width) break; //Commented this if you want to shift continuously
 				// first 16 pixels of x or y has to have the same color
 				// & MAP_SIZE_MASK means that the tile will repeat after MAP_SIZE - 1 tiles
-				int tileIndex = ((xx >> 4) & MAP_SIZE_MASK) + ((yy >> 4) & MAP_SIZE_MASK) * MAP_SIZE; // >>4 = /16 (2^4)
+				//int tileIndex = ((xx >> 4) & MAP_SIZE_MASK) + ((yy >> 4) & MAP_SIZE_MASK) * MAP_SIZE; // >>4 = /16 (2^4)
 				/*System.out.println(tileIndex); tileIndex repeats 16 times 
 				Hence the 16 x 16 pixels has the same color of tiles*/
 				// pixel length = 48600 / 16 / 16 = Color blocks(one tiles) on screen
-				pixels[x + y * width] = Sprite.grass.pixels[(x & 15) + (y & 15) * Sprite.grass.SIZE];
+				pixels[xp + yp * width] = Sprite.grass.pixels[(x & 15) + (y & 15) * Sprite.grass.SIZE];
 			}
 
 		}
